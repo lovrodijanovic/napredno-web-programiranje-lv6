@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  div.project-header
+    h1 List of Projects
+    form(action='/projects/new', method='GET') 
+      button.add-project(type='submit') Add New Project 
+  ul.projects-list
+    each project in projects
+      li.card
+        a(href=`/projects/${project._id}`)
+          div.project-header
+            h2= project.name + " - " + project.price + " €"
+            form(action=`/projects/${project._id}`, method='POST')
+              button.delete-project(type='submit') Delete
+          div.project-content
+            p= project.description
+            p Duration: #{project.start_date_formatted} - #{project.end_date_formatted}
+            p Finished jobs:
+            ul.finished-jobs
+              each job in project.finished_jobs
+                li= job.job_name
